@@ -1,1 +1,1 @@
-__all__ = ['SprongleGame']
+__all__ = ['GameMainScreen']

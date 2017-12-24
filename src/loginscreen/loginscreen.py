@@ -2,13 +2,16 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.screenmanager import Screen
 from kivy.uix.behaviors.focus import FocusBehavior
 
 
 class FocusTextInput(TextInput, FocusBehavior):
     pass
 
+
 class UserDetailsGrid(GridLayout):
+
     def __init__(self, **kwargs):
         super(UserDetailsGrid, self).__init__(**kwargs)
         self.cols = 2
@@ -24,10 +27,14 @@ class UserDetailsGrid(GridLayout):
                                        write_tab=False)
         self.add_widget(self.Password)
 
-class LoginScreen(GridLayout):
+
+class LoginScreen(GridLayout, Screen):
+
     def __init__(self, **kwargs):
         super(LoginScreen, self).__init__(**kwargs)
         self.cols = 1
+
+        self.logged_in = False
 
         self.UserDetails = UserDetailsGrid()
         self.UserDetails.size_hint = [1.5, 1.5]
@@ -45,16 +52,19 @@ class LoginScreen(GridLayout):
 
     def on_login(self, *args):
         print self.UserDetails.Username.text, self.UserDetails.Password.text
-        self.login_success()
+        # verification takes place here!
+        # this line should take place inside 'if verification == worked'
+        self.logged_in = True
 
     def on_create_account(self, *args):
         self.remove_widget(self.LoginButton)
         self.remove_widget(self.AccountCreationButton)
 
         self.UserDetails.PasswordLabel.text = \
-        '''Enter your password:\nMake it secure!'''
+            '''Enter your password:\nMake it secure!'''
 
-        self.ReEnterPasswordLabel = Label(text='Please re-enter your password:')
+        self.ReEnterPasswordLabel = Label(
+            text='Please re-enter your password:')
         self.UserDetails.add_widget(self.ReEnterPasswordLabel)
 
         self.ReEnterPassword = FocusTextInput(password=True, multiline=False,
@@ -64,7 +74,7 @@ class LoginScreen(GridLayout):
         self.CreateAccountButton = Button(text='Create account')
         self.add_widget(self.CreateAccountButton)
 
-    def login_success(self):
-        for child in self.children:
-            self.remove_widget(child)
-        return SprongleGame()
+    # def login_success(self):
+    #     for child in self.children:
+    #         self.remove_widget(child)
+    #     return SprongleGame()
