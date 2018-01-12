@@ -10,7 +10,7 @@ from kivy.uix.screenmanager import Screen
 
 class GameMainScreen(Screen):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         super(GameMainScreen, self).__init__(**kwargs)
 
         self.FloorWidget = Floor()

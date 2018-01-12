@@ -36,6 +36,8 @@ class SprongleStateController(ScreenManager):
         if self.current == 'LoginScreen':
             if self.Login.logged_in == True:
                 self.GameScreen = GameMainScreen()
+                self.GameScreen.Player.PlayerName.text = \
+                    self.Login.UserDetails.Username.text
                 self.GameScreen.name = 'GameScreen'
                 self.add_widget(self.GameScreen)
 
@@ -49,5 +51,5 @@ class SprongleStateController(ScreenManager):
 
 
 if __name__ == '__main__':
-    s = SprongleApp()
-    s.run()
+    SprongleApp().run()
+    # s.run()
